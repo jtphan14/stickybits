@@ -1,7 +1,8 @@
 export default function () {
   const testElement = document.createElement('test');
-  return !!['', '-webkit-', '-moz-', '-ms-', '-o-'].find((prefix) => {
+  const isStickySupported = !['', '-webkit-', '-moz-', '-ms-', '-o-'].find((prefix) => {
     testElement.style.position = `${prefix}sticky`;
     return testElement.style.position;
   });
+  return isStickySupported;
 }

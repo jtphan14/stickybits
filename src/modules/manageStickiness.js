@@ -9,7 +9,7 @@ export default function () {
   const stickyBitStop = (stickyBitStart + elParent.offsetHeight) - el.offsetHeight;
   elParent.classList.add('js-stickybit-parent');
 
-  function stickiness() {
+  function createStickiness() {
     const scroll = scrollTarget.scrollY;
     if (scroll < stickyBitStart) {
       if (elClasses.contains(stickyBitClass)) {
@@ -38,5 +38,5 @@ export default function () {
     }
     return;
   }
-  scrollTarget.addEventListener('scroll', () => scrollTarget.requestAnimationFrame(stickiness));
+  scrollTarget.addEventListener('scroll', () => scrollTarget.requestAnimationFrame(createStickiness));
 }

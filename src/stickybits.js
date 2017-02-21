@@ -4,6 +4,7 @@
    ----------
    Includes:
    - browserSupportCheck
+   - addStickyPropValue
    - sticky management
    - vertical position setup
    Doesn't Include:
@@ -12,7 +13,6 @@
 */
 import doesBrowserSupportSticky from './modules/doesBrowserSupportSticky';
 import manageStickiness from './modules/manageStickiness';
-import setVerticalPosition from './modules/setVerticalPosition';
 
 function StickyBit(target, opts = {}) {
   const defaults = {
@@ -22,15 +22,22 @@ function StickyBit(target, opts = {}) {
   };
   this.el = target;
   this.opts = Object.assign(opts, defaults);
-  this.el.style.position = doesBrowserSupportSticky();
+  ['', '-webkit-', '-moz-', '-ms-', '-o-'].find((prefix) => {
+    this.el.style.position = `${prefix}sticky`;
+    return this.el.style.position;
+  });
+  if (this.opts.customVerticalPosition === false) {
+    this.el.style.top = `${this.opts.stickyBitStickyOffset}px`;
+  }
 }
+// StickyBit.prototype.manageStickiness = manageStickiness();
 
 export default function stickybits(target, opts) {
   // let els = typeof target === 'string' ? document.querySelectorAll(target) : target;
   // if (!('length' in els)) els = [els];
-  const stickyBit = new StickyBit(target, opts);
-  stickyBit.prototype.setVerticalPosition = setVerticalPosition();
-  stickyBit.prototype.manageStickiness = manageStickiness();
+  console.log('here');
+  console.log(new StickyBit(target, opts));
+  return new StickyBit(target, opts);
   // for (el of els) {
   //   stickybit(el, opts);
   // }
